@@ -1,10 +1,11 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import AuthRoute from "./components/navigation-components/AuthRoute";
+import DashboardRoute from "./components/navigation-components/DashboardRoute";
 
 function App() {
   return (
-    <div className="h-100vh bg-red-200">
-      <h1>hello world</h1>
-    </div>
+    <BrowserRouter>{false ? <DashboardRoute /> : <AuthRoute />}</BrowserRouter>
   );
 }
 
