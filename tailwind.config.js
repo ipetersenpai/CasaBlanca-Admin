@@ -8,6 +8,9 @@ export default {
       laptop: "960px", // => @media (min-width: 960px)
       desktop: "1480px", // => @media (min-width: 1280px)
     },
+    backgroundImage: {
+      ImageBg: "url('./assets/images/image_1.jpg')",
+    },
     extend: {},
   },
   daisyui: {

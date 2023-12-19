@@ -12,7 +12,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { LuUnlock } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 
-const SigninScreen = () => {
+const SignupScreen = () => {
   const {
     register,
     handleSubmit,
@@ -43,12 +43,12 @@ const SigninScreen = () => {
         <div className="flex flex-col tablet:w-[420px] desktop:w-[450px] w-[98%] mx-auto bg-secondary text-white p-4 rounded-[15px] shadow-lg">
           <section className="flex flex-row w-full">
             <h1 className="font-bold text-[26px] mx-auto mb-10 mt-3">
-              SIGN IN
+              REGISTER
             </h1>
           </section>
 
           <span className="font-bold ml-3">Email</span>
-          <div className="mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
+          <div className="bg-red-200 mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
             <MdOutlineEmail className="text-gray-400 text-[28px] absolute ml-2 z-10" />
             <TextField
               sx={{
@@ -135,38 +135,16 @@ const SigninScreen = () => {
               {errors.password.message}
             </p>
           )}
-          <span
-            className="text-end mr-3 mt-2 cursor-pointer hover:underline hover:text-blue-500"
-            onClick={() => {
-              navigate("/forgot-password");
-            }}
-          >
-            Forgot Password?
-          </span>
 
           <button
             type="submit"
             className="btn mt-7 w-[95%] mx-auto btn-primary text-[20px] text-white rounded-[10px]"
           >
-            SIGN IN
+            SIGN UP
           </button>
+          <p className="mx-auto mt-5 text-center text-[16px]">Sign up with</p>
 
-          <p className="mx-auto mt-4  text-center text-[16px]">
-            Don't have an account?{" "}
-            <span
-              className="cursor-pointer hover:underline hover:text-blue-500 text-blue-400"
-              onClick={() => {
-                navigate("/signup");
-              }}
-            >
-              Sign up
-            </span>
-          </p>
-          <p className="mx-auto mt-[-0.2rem] text-center text-[16px]">
-            {" "}
-            or with
-          </p>
-          <div className="w-[95%] flex tablet:flex-row flex-col justify-between my-4 mx-auto tablet:gap-2 gap-4">
+          <div className="w-[95%] flex tablet:flex-row flex-col justify-between mt-4 mx-auto tablet:gap-2 gap-4">
             <div
               className="bg-white rounded-[20px] flex flex-row h-[42px] hover:bg-[#f5f5f5] cursor-pointer
                          text-black items-center gap-2 w-full justify-center"
@@ -185,10 +163,21 @@ const SigninScreen = () => {
               <p className="text-[17px]">Gmail</p>
             </div>
           </div>
+          <p className="mx-auto mb-4 mt-7 text-center text-[16px]">
+            Already have an account?{" "}
+            <span
+              className="cursor-pointer hover:underline hover:text-blue-500 text-blue-400"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Sign in
+            </span>
+          </p>
         </div>
       </form>
     </div>
   );
 };
 
-export default SigninScreen;
+export default SignupScreen;
