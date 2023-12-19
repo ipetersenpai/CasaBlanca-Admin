@@ -5,7 +5,7 @@ import DashboardRoute from "./components/navigation-components/DashboardRoute";
 
 function App() {
   return (
-    <BrowserRouter>{false ? <DashboardRoute /> : <AuthRoute />}</BrowserRouter>
+    <BrowserRouter>{true ? <DashboardRoute /> : <AuthRoute />}</BrowserRouter>
   );
 }
 
