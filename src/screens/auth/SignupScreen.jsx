@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BusinessLogo from "./../../assets/icons/business_logo.png";
+import { RiErrorWarningFill } from "react-icons/ri";
 import facebookIcon from "./../../assets/icons/fb_icon.png";
 import gooogleIcon from "./../../assets/icons/google_icon.png";
 import TextField from "@mui/material/TextField";
@@ -31,7 +31,12 @@ const SignupScreen = () => {
 
   return (
     <div className="flex flex-col h-[100vh] w-full justify-center items-center bg-ImageBg bg-no-repeat bg-cover overflow-y-auto">
-      <div className="w-full fixed top-0 hidden tablet:flex">
+      <div
+        className="w-full fixed top-0 hidden tablet:flex cursor-pointer"
+        onClick={() => {
+          navigate("/");
+        }}
+      >
         <h1
           className="font-bold p-2 text-[28px] text-white"
           style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
@@ -142,6 +147,13 @@ const SignupScreen = () => {
           >
             SIGN UP
           </button>
+
+          {/* -----Error Message Validation------ */}
+          {/* <div className=" bg-red-200 text-red-500 h-[45px] flex items-center justify-center w-[95%] mx-auto mt-5 border-[1px] border-red-500 gap-2">
+            <RiErrorWarningFill className="text-[22px]" />
+            <p>Email is Already Exist</p>
+          </div> */}
+
           <p className="mx-auto mt-5 text-center text-[16px]">Sign up with</p>
 
           <div className="w-[95%] flex tablet:flex-row flex-col justify-between mt-4 mx-auto tablet:gap-2 gap-4">

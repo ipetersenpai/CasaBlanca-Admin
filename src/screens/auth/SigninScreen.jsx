@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import BusinessLogo from "./../../assets/icons/business_logo.png";
 import facebookIcon from "./../../assets/icons/fb_icon.png";
 import gooogleIcon from "./../../assets/icons/google_icon.png";
 import TextField from "@mui/material/TextField";
+import { RiErrorWarningFill } from "react-icons/ri";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -31,7 +31,12 @@ const SigninScreen = () => {
 
   return (
     <div className="flex flex-col h-[100vh] w-full justify-center items-center bg-ImageBg bg-no-repeat bg-cover overflow-y-auto">
-      <div className="w-full fixed top-0 hidden tablet:flex">
+      <div
+        className="w-full fixed top-0 hidden tablet:flex cursor-pointer"
+        onClick={() => {
+          navigate("/");
+        }}
+      >
         <h1
           className="font-bold p-2 text-[28px] text-white"
           style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
@@ -150,6 +155,17 @@ const SigninScreen = () => {
           >
             SIGN IN
           </button>
+
+          {/* -----Error Message Validation------ */}
+          {/* <div className=" bg-red-200 text-red-500 h-[45px] flex items-center justify-center w-[95%] mx-auto mt-5 border-[1px] border-red-500 gap-2">
+            <RiErrorWarningFill className="text-[22px]" />
+            <p>Invalid Email and Password</p>
+          </div>
+
+          <div className=" bg-yellow-200 text-yellow-600 h-[45px] flex items-center justify-center w-[95%] mx-auto mt-5 border-[1px] border-yellow-500 gap-2">
+            <RiErrorWarningFill className="text-[22px]" />
+            <p>Account is not Verified</p>
+          </div> */}
 
           <p className="mx-auto mt-4  text-center text-[16px]">
             Don't have an account?{" "}
