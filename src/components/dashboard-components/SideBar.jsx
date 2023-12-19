@@ -10,11 +10,24 @@ const SideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [openSidebar, setOpenSidebar] = useState(true);
+  const [showName, setShowName] = useState(false);
 
   const logoutHandler = () => {
     //your logout logic here
     console.log("Logout");
   };
+
+  useEffect(() => {
+    if (openSidebar) {
+      const timeoutId = setTimeout(() => {
+        setShowName(true);
+      }, 200);
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      setShowName(false);
+    }
+  }, [openSidebar]);
 
   return (
     <div
@@ -44,7 +57,7 @@ const SideBar = () => {
       {/* ----Menu item---- */}
       <div
         className={`bg-primary pt-[62px] ease-out-in duration-500 fixed
-            flex-wrap overflow-y-auto custom-scrollbar h-[100vh]
+            flex-wrap h-[100vh]
             ${openSidebar ? "w-[259px]" : "w-[60px]"} mb-50`}
       >
         <div
@@ -60,13 +73,7 @@ const SideBar = () => {
           <div className="h-[42px] min-w-[42px] rounded-[50%] bg-secondary flex items-center justify-center">
             <FaUser className="text-[22px]" />
           </div>
-          <p
-            className={`${
-              openSidebar ? "flex" : "hidden"
-            } text-bold text-[18px]`}
-          >
-            John Doe
-          </p>
+          {showName && <p className={`text-bold text-[18px]`}>John Doe</p>}
         </div>
 
         <div
@@ -82,13 +89,7 @@ const SideBar = () => {
           <div className="h-[42px] min-w-[42px]  flex items-center justify-center">
             <MdDashboardCustomize className="text-[35px]" />
           </div>
-          <p
-            className={`${
-              openSidebar ? "flex" : "hidden"
-            } text-bold text-[18px]`}
-          >
-            Dashboard
-          </p>
+          {showName && <p className={`text-bold text-[18px]`}>Dashboard</p>}
         </div>
 
         <div
@@ -104,13 +105,7 @@ const SideBar = () => {
           <div className="h-[42px] min-w-[42px]  flex items-center justify-center">
             <SiCashapp className="text-[30px]" />
           </div>
-          <p
-            className={`${
-              openSidebar ? "flex" : "hidden"
-            } text-bold text-[18px]`}
-          >
-            Payroll
-          </p>
+          {showName && <p className={`text-bold text-[18px]`}>Payroll</p>}
         </div>
 
         <div
@@ -126,15 +121,8 @@ const SideBar = () => {
           <div className="h-[42px] min-w-[42px]  flex items-center justify-center">
             <FaCashRegister className="text-[30px]" />
           </div>
-          <p
-            className={`${
-              openSidebar ? "flex" : "hidden"
-            } text-bold text-[18px]`}
-          >
-            Point Of Sale
-          </p>
+          {showName && <p className={`text-bold text-[18px]`}>Point Of Sale</p>}
         </div>
-
         <div
           className={`flex flex-row gap-4 max-auto p-2 items-center hover:bg-[#7E1F21] cursor-pointer`}
           onClick={logoutHandler}
@@ -143,13 +131,7 @@ const SideBar = () => {
           <div className="h-[42px] min-w-[42px]  flex items-center justify-center">
             <RiLogoutBoxRLine className="text-[30px]" />
           </div>
-          <p
-            className={`${
-              openSidebar ? "flex" : "hidden"
-            } text-bold text-[18px]`}
-          >
-            Logout
-          </p>
+          {showName && <p className={`text-bold text-[18px]`}>Logout</p>}
         </div>
       </div>
     </div>
