@@ -9,7 +9,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const SideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [openSidebar, setOpenSidebar] = useState(true);
+  const [openSidebar, setOpenSidebar] = useState(false);
   const [showName, setShowName] = useState(false);
 
   const logoutHandler = () => {
@@ -35,7 +35,7 @@ const SideBar = () => {
         openSidebar
           ? "w-[259px] ease-out-in duration-500"
           : "w-[60px] ease-in-out duration-500"
-      } h-full text-white flex flex-col`}
+      } h-full text-white flex flex-col tablet:relative absolute`}
     >
       {/* ----Menu icon---- */}
       <div
