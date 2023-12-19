@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { BsDoorOpenFill } from "react-icons/bs";
 import Room1Modal from "../../components/dashboard-components/room1Modal";
+import Room2Modal from "../../components/dashboard-components/room2Modal";
+import Room3Modal from "../../components/dashboard-components/Room3Modal";
+import Room4Modal from "../../components/dashboard-components/Room4Modal";
 
 const DashboardScreen = () => {
   const [openroom1Modal, setOpenRoom1Modal] = useState(false);
+  const [openroom2Modal, setOpenRoom2Modal] = useState(false);
+  const [openroom3Modal, setOpenRoom3Modal] = useState(false);
+  const [openroom4Modal, setOpenRoom4Modal] = useState(false);
 
   const openRoom1ModalHandler = () => {
     setOpenRoom1Modal(true);
@@ -12,6 +18,29 @@ const DashboardScreen = () => {
   const closeRoom1ModalHandler = () => {
     setOpenRoom1Modal(false);
   };
+  const openRoom2ModalHandler = () => {
+    setOpenRoom2Modal(true);
+  };
+
+  const closeRoom2ModalHandler = () => {
+    setOpenRoom2Modal(false);
+  };
+
+  const openRoom3ModalHandler = () => {
+    setOpenRoom3Modal(true);
+  };
+
+  const closeRoom3ModalHandler = () => {
+    setOpenRoom3Modal(false);
+  };
+
+  const openRoom4ModalHandler = () => {
+    setOpenRoom4Modal(true);
+  };
+
+  const closeRoom4ModalHandler = () => {
+    setOpenRoom4Modal(false);
+  };
 
   return (
     <>
@@ -19,6 +48,24 @@ const DashboardScreen = () => {
         <Room1Modal
           openModal={openroom1Modal}
           closeModal={closeRoom1ModalHandler}
+        />
+      )}
+      {openroom2Modal && (
+        <Room2Modal
+          openModal={openroom2Modal}
+          closeModal={closeRoom2ModalHandler}
+        />
+      )}
+      {openroom3Modal && (
+        <Room3Modal
+          openModal={openroom3Modal}
+          closeModal={closeRoom3ModalHandler}
+        />
+      )}
+      {openroom4Modal && (
+        <Room4Modal
+          openModal={openroom4Modal}
+          closeModal={closeRoom4ModalHandler}
         />
       )}
 
@@ -47,6 +94,7 @@ const DashboardScreen = () => {
             <section
               className="h-[220px] laptop:w-[350px] w-[320px] bg-[#666666] border-[#666666] hover:border-white rounded-[20px]
             p-5 border-[3px] cursor-pointer"
+              onClick={openRoom2ModalHandler}
             >
               <div className="flex flex-row items-end gap-2">
                 <BsDoorOpenFill className="text-[42px]" />
@@ -56,6 +104,7 @@ const DashboardScreen = () => {
             <section
               className="h-[220px] laptop:w-[350px] w-[320px] bg-[#666666] border-[#666666] hover:border-white rounded-[20px]
             p-5 border-[3px] cursor-pointer"
+              onClick={openRoom3ModalHandler}
             >
               <div className="flex flex-row items-end gap-2">
                 <BsDoorOpenFill className="text-[42px]" />
@@ -65,6 +114,7 @@ const DashboardScreen = () => {
             <section
               className="h-[220px] laptop:w-[350px] w-[320px] bg-[#666666] border-[#666666] hover:border-white rounded-[20px]
             p-5 border-[3px] cursor-pointer"
+              onClick={openRoom4ModalHandler}
             >
               <div className="flex flex-row items-end gap-2">
                 <BsDoorOpenFill className="text-[42px]" />

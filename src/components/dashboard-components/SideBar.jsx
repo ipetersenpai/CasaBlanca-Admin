@@ -9,7 +9,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const SideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [openSidebar, setOpenSidebar] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(true);
   const [showName, setShowName] = useState(false);
 
   const logoutHandler = () => {

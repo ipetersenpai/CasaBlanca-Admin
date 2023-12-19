@@ -10,7 +10,7 @@ const formatDate = (dateString) => {
   return dateObject.toLocaleDateString("en-US", options);
 };
 
-const Room1Modal = ({ openModal, closeModal }) => {
+const Room4Modal = ({ openModal, closeModal }) => {
   const [modalHandler, setModalHandler] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState("");
 
@@ -189,7 +189,7 @@ const Room1Modal = ({ openModal, closeModal }) => {
             >
               <section className="z-10 flex flex-row w-full justify-between mb-5">
                 <h1 className="text-center w-full text-primary font-bold text-[24px] mt-0 ml-[2rem]">
-                  ROOM NO. 1
+                  ROOM NO. 4
                 </h1>
 
                 <button
@@ -281,4 +281,4 @@ const Room1Modal = ({ openModal, closeModal }) => {
   );
 };
 
-export default Room1Modal;
+export default Room4Modal;
