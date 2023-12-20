@@ -35,7 +35,7 @@ const SideBar = () => {
         openSidebar
           ? "w-[259px] ease-out-in duration-500"
           : "w-[60px] ease-in-out duration-500"
-      } h-full text-white flex flex-col tablet:relative absolute`}
+      } h-full text-white flex flex-col tablet:relative absolute z-10`}
     >
       {/* ----Menu icon---- */}
       <div
@@ -61,19 +61,16 @@ const SideBar = () => {
             ${openSidebar ? "w-[259px]" : "w-[60px]"} mb-50`}
       >
         <div
-          className={`flex flex-row gap-4 max-auto p-2 items-center hover:bg-[#7E1F21] cursor-pointer ${
-            location.pathname === "/profile" ? "bg-[#7E1F21]" : ""
-          }`}
-          onClick={() => {
-            //change it to the actual path
-            navigate("/profile");
-          }}
+          className={`flex flex-row gap-4 max-auto p-2 items-center cursor-pointer
+           bg-accent rounded-[20px] ${openSidebar ? "mx-2" : "mx-0"}`}
         >
           {/* ----Add if else condition here for dynamic user profile---- */}
           <div className="h-[42px] min-w-[42px] rounded-[50%] bg-secondary flex items-center justify-center">
             <FaUser className="text-[22px]" />
           </div>
-          {showName && <p className={`text-bold text-[18px]`}>John Doe</p>}
+          {showName && (
+            <p className={`text-bold text-[18px] text-black`}>John Doe</p>
+          )}
         </div>
 
         <div

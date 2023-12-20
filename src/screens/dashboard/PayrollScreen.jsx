@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { FaUser } from "react-icons/fa6";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { AiFillEdit } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
@@ -130,15 +131,22 @@ const PayrollScreen = () => {
             </div>
             {/* ------Payroll Header ends here-------- */}
 
-            <div className=" w-full h-full mt-2 overflow-y-auto flex flex-col gap-2 p-2">
+            <div className=" w-full h-full mt-2 overflow-y-auto flex flex-col gap-4 p-2">
               {/* ------Populate tables row here, Change this with the actual data-------- */}
               {filteredEmployees.length > 0 ? (
                 filteredEmployees.map((employee) => (
                   <div
                     key={employee.id}
-                    className="min-h-[55px] bg-accent rounded-[20px] flex flex-row justify-between items-center hover:bg-[#c2c1b7] text-black px-4"
+                    className="min-h-[55px] bg-accent rounded-[10px] flex flex-row justify-between items-center hover:bg-[#c2c1b7] text-black px-4"
                   >
-                    <p className="text-[16px]">{employee.full_name}</p>
+                    <div className="h-full flex flex-row gap-2 items-center">
+                      {/* ----Add your logic here for dynamic employee profile---- */}
+                      <div className="h-[42px] min-w-[42px] rounded-[50%] bg-secondary flex items-center justify-center">
+                        <FaUser className="text-[22px] text-white" />
+                      </div>
+                      <p className="text-[16px]">{employee.full_name}</p>
+                    </div>
+
                     <div className="h-full flex flex-row gap-2 items-center">
                       <AiFillEdit
                         className="text-[28px] cursor-pointer hover:text-purple-600"

@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import DashboardScreen from "../../screens/dashboard/DashboardScreen";
 import SideBar from "../dashboard-components/SideBar";
 import PayrollScreen from "../../screens/dashboard/PayrollScreen";
+import PointOfSaleScreen from "../../screens/dashboard/PointOfSaleScreen";
 
 const DashboardRoute = () => {
   return (
@@ -23,6 +24,15 @@ const DashboardRoute = () => {
             <>
               <SideBar />
               <PayrollScreen />
+            </>
+          }
+        />
+        <Route
+          path="/point-of-sale"
+          element={
+            <>
+              <SideBar />
+              <PointOfSaleScreen />
             </>
           }
         />

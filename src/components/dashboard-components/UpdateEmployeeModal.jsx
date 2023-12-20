@@ -287,7 +287,7 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
                   )}
                   <button
                     type="submit"
-                    className="btn mt-7 w-[95%] mx-auto bg-green-600 hover:bg-green-700 text-[20px] text-white rounded-[20px] mb-5 z-10"
+                    className="btn mt-2 w-[95%] mx-auto bg-green-600 hover:bg-green-700 text-[20px] text-white rounded-[20px] mb-5 z-10"
                   >
                     UPDATE
                   </button>

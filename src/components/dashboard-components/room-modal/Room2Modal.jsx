@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { VscError } from "react-icons/vsc";
-import { CustomerRequestList } from "../../mockData"; //temporary replace this with actual data from the database
+import { CustomerRequestList } from "../../../mockData"; //temporary replace this with actual data from the database
 
 const formatDate = (dateString) => {
   const dateObject = new Date(dateString);
@@ -10,7 +10,7 @@ const formatDate = (dateString) => {
   return dateObject.toLocaleDateString("en-US", options);
 };
 
-const Room3Modal = ({ openModal, closeModal }) => {
+const Room2Modal = ({ openModal, closeModal }) => {
   const [modalHandler, setModalHandler] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState("");
 
@@ -189,7 +189,7 @@ const Room3Modal = ({ openModal, closeModal }) => {
             >
               <section className="z-10 flex flex-row w-full justify-between mb-5">
                 <h1 className="text-center w-full text-primary font-bold text-[24px] mt-0 ml-[2rem]">
-                  ROOM NO. 3
+                  ROOM NO. 2
                 </h1>
 
                 <button
@@ -281,4 +281,4 @@ const Room3Modal = ({ openModal, closeModal }) => {
   );
 };
 
-export default Room3Modal;
+export default Room2Modal;

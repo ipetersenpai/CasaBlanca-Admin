@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { VscError } from "react-icons/vsc";
-import { CustomerRequestList } from "../../mockData"; //temporary replace this with actual data from the database
+import { CustomerRequestList } from "../../../mockData"; //temporary replace this with actual data from the database
 
 const formatDate = (dateString) => {
   const dateObject = new Date(dateString);
