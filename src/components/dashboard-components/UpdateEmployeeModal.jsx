@@ -4,7 +4,7 @@ import { MdCheckCircleOutline } from "react-icons/md";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 
-const AddEmployeeModal = ({ openModal, closeModal }) => {
+const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
   const [modalHandler, setModalHandler] = useState(false);
   const [imageAttach, setImageAttach] = useState(null);
 
@@ -16,7 +16,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
 
   //---onSubmit handler----
   const onSubmitHandler = (data) => {
-    console.log(data); // add your logic here to handle the create new employee and don't forget to include imageAttach for the user profile
+    console.log(data); // add your logic here to handle the update employee record and don't forget to include imageAttach for the user profile
     document.getElementById("created_succcess").showModal();
   };
 
@@ -41,7 +41,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
           </section>
           <div className="flex flex-col w-full items-center justify-center my-4">
             <MdCheckCircleOutline className="text-green-600 text-[175px]" />
-            <p className="text-[28px] mt-2 text-center">CREATE SUCCESSFULLY</p>
+            <p className="text-[28px] mt-2 text-center">UPDATE SUCCESSFULLY</p>
           </div>
           <div className="modal-action w-full mx-auto flex items-center">
             {/* change the button into span tag if you are dealing with api request */}
@@ -69,7 +69,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
             >
               <section className="z-10 flex flex-row w-full justify-between mb-5">
                 <h1 className="text-center w-full  font-bold text-[24px] mt-0 ml-[2rem] text-primary">
-                  CREATE EMPLOYEE
+                  UPDATE EMPLOYEE
                 </h1>
 
                 <button
@@ -93,7 +93,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
                     onChange={(e) => {
                       setImageAttach(e.target.files[0]);
                     }}
-                    className="file-input file-input-bordered text-black w-full rounded-[20px] mb-4 z-10"
+                    className="file-input file-input-bordered text-black w-full rounded-[20px] mb-4"
                   />
 
                   <TextField
@@ -113,6 +113,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
                     }}
                     name="full_name"
                     placeholder="Enter the full name"
+                    defaultValue={selectedEmployee.full_name}
                     error={errors.full_name ? true : false}
                     {...register("full_name", {
                       required: "This is required",
@@ -145,6 +146,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
                       },
                     }}
                     name="email"
+                    defaultValue={selectedEmployee.email}
                     placeholder="Enter the email"
                     error={errors.email ? true : false}
                     {...register("email", {
@@ -176,6 +178,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
                       },
                     }}
                     name="contact_no"
+                    defaultValue={selectedEmployee.contact_no}
                     placeholder="Enter the contact no."
                     error={errors.contact_no ? true : false}
                     {...register("contact_no", {
@@ -208,6 +211,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
                       },
                     }}
                     name="username"
+                    defaultValue={selectedEmployee.username}
                     placeholder="Enter the username"
                     error={errors.username ? true : false}
                     {...register("username", {
@@ -236,6 +240,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
                       },
                     }}
                     name="password"
+                    defaultValue={selectedEmployee.password}
                     placeholder="Enter the password"
                     error={errors.password ? true : false}
                     {...register("password", {
@@ -268,6 +273,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
                       },
                     }}
                     name="employee_id"
+                    defaultValue={selectedEmployee.employee_id}
                     placeholder="Enter the Employee ID"
                     error={errors.employee_id ? true : false}
                     {...register("employee_id", {
@@ -283,7 +289,7 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
                     type="submit"
                     className="btn mt-7 w-[95%] mx-auto bg-green-600 hover:bg-green-700 text-[20px] text-white rounded-[20px] mb-5 z-10"
                   >
-                    CREATE
+                    UPDATE
                   </button>
                 </div>
               </form>
@@ -295,4 +301,4 @@ const AddEmployeeModal = ({ openModal, closeModal }) => {
   );
 };
 
-export default AddEmployeeModal;
+export default UpdateEmployeeModal;

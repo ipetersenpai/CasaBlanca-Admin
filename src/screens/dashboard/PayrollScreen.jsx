@@ -5,12 +5,15 @@ import { AiFillEdit } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
 import { EmployeeList } from "../../mockData";
 import AddEmployeeModal from "../../components/dashboard-components/AddEmployeeModal";
+import UpdateEmployeeModal from "../../components/dashboard-components/UpdateEmployeeModal";
 
 const PayrollScreen = () => {
   const [attachFile, setAttachFile] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState(EmployeeList);
   const [addEmployeeModal, setAddEmployeeModal] = useState(false);
+  const [updateEmployeeModal, setUpdateEmployeeModal] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState("");
 
   // Function to filter employees based on search query
   const filterEmployees = () => {
@@ -45,12 +48,32 @@ const PayrollScreen = () => {
     setAddEmployeeModal(false);
   };
 
+  const updateEmployeeHandler = (data) => {
+    setSelectedEmployee(data);
+    setUpdateEmployeeModal(true);
+  };
+
+  const CloseUpdateEmployeeHandler = () => {
+    setUpdateEmployeeModal(false);
+  };
+
   return (
     <>
-      <AddEmployeeModal
-        openModal={addEmployeeModal}
-        closeModal={CloseEmployeeHandler}
-      />
+      {addEmployeeModal && (
+        <AddEmployeeModal
+          openModal={addEmployeeModal}
+          closeModal={CloseEmployeeHandler}
+        />
+      )}
+
+      {updateEmployeeModal && (
+        <UpdateEmployeeModal
+          openModal={updateEmployeeModal}
+          closeModal={CloseUpdateEmployeeHandler}
+          selectedEmployee={selectedEmployee}
+        />
+      )}
+
       <div className="flex flex-col w-full overflow-y-hidden text-white tablet:ml-0 ml-[55px]">
         <h1 className="tablet:hidden p-4 text-[24px] font-bold w-full text-center">
           CASA BLANCA <br />
@@ -119,7 +142,9 @@ const PayrollScreen = () => {
                     <div className="h-full flex flex-row gap-2 items-center">
                       <AiFillEdit
                         className="text-[28px] cursor-pointer hover:text-purple-600"
-                        onClick={undefined}
+                        onClick={() => {
+                          updateEmployeeHandler(employee);
+                        }}
                       />
                       <RiDeleteBin2Fill
                         className="text-[28px] cursor-pointer hover:text-red-600"
