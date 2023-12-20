@@ -64,7 +64,8 @@ const SideBar = () => {
               className="btn bg-green-600 hover:bg-green-700 text-white tablet:h-[45px] tablet:w-[50%] w-full
               mx-auto rounded-[80px] text-[18px] font-medium"
               onClick={() => {
-                document.getElementById("logout_modal").close();
+                localStorage.removeItem("TemAuthToken");
+                window.location.href = "/";
               }}
             >
               CONTINUE

@@ -36,6 +36,15 @@ const DashboardRoute = () => {
             </>
           }
         />
+        <Route
+          path="*"
+          element={
+            <>
+              <SideBar />
+              <DashboardScreen />
+            </>
+          }
+        />
       </Routes>
     </div>
   );

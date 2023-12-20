@@ -21,6 +21,10 @@ const SigninScreen = () => {
   //---onSubmit handler----
   const onSubmitHandler = (data) => {
     console.log(data);
+
+    //This is temporary only to handle the changing from auth to dashboard. Change this with actual API request for auth
+    localStorage.setItem("TemAuthToken", true);
+    location.href = location.href;
   };
 
   const navigate = useNavigate();

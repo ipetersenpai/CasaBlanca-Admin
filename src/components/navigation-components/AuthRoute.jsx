@@ -11,6 +11,7 @@ const AuthRoute = () => {
         <Route path="/" element={<SigninScreen />} />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
+        <Route path="*" element={<SigninScreen />} />
       </Routes>
     </div>
   );
