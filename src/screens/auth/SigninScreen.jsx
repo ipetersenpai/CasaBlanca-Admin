@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import facebookIcon from "./../../assets/icons/fb_icon.png";
 import gooogleIcon from "./../../assets/icons/google_icon.png";
 import TextField from "@mui/material/TextField";
-import { RiErrorWarningFill } from "react-icons/ri";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import InputAdornment from "@mui/material/InputAdornment";
