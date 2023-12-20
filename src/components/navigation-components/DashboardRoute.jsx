@@ -2,10 +2,11 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardScreen from "../../screens/dashboard/DashboardScreen";
 import SideBar from "../dashboard-components/SideBar";
+import PayrollScreen from "../../screens/dashboard/PayrollScreen";
 
 const DashboardRoute = () => {
   return (
-    <div className="flex bg-secondary min-h-[100vh]">
+    <div className="flex  bg-ImageBg bg-no-repeat bg-cover min-h-[100vh]">
       <Routes>
         <Route
           path="/"
@@ -13,6 +14,15 @@ const DashboardRoute = () => {
             <>
               <SideBar />
               <DashboardScreen />
+            </>
+          }
+        />
+        <Route
+          path="/payroll"
+          element={
+            <>
+              <SideBar />
+              <PayrollScreen />
             </>
           }
         />

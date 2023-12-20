@@ -133,7 +133,7 @@ const Room1Modal = ({ openModal, closeModal }) => {
           </section>
           <div className="flex flex-col w-full items-center justify-center my-4">
             <MdCheckCircleOutline className="text-green-600 text-[175px]" />
-            <p className="text-[28px] mt-2 text-center">Approved Reservation</p>
+            <p className="text-[28px] mt-2 text-center">Reservation Approved</p>
           </div>
           <div className="modal-action w-full mx-auto flex items-center">
             {/* change the button into span tag if you are dealing with api request */}
@@ -163,7 +163,7 @@ const Room1Modal = ({ openModal, closeModal }) => {
           <div className="flex flex-col w-full items-center justify-center my-4">
             <VscError className="text-red-600 text-[175px]" />
             <p className="text-[28px] mt-2 text-center">
-              Cancelled Reservation
+              Reservation Cancelled
             </p>
           </div>
           <div className="modal-action w-full mx-auto flex items-center">

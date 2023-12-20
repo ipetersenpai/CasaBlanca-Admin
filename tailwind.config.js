@@ -9,7 +9,7 @@ export default {
       desktop: "1480px", // => @media (min-width: 1280px)
     },
     backgroundImage: {
-      ImageBg: "url('./assets/images/image_1.jpg')",
+      ImageBg: "url('./assets/images/image_2.jpg')",
     },
     extend: {},
   },

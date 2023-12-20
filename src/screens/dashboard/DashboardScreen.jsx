@@ -69,7 +69,7 @@ const DashboardScreen = () => {
         />
       )}
 
-      <div className="flex flex-col w-full bg-secondary overflow-y-hidden text-white tablet:ml-0 ml-[55px]">
+      <div className="flex flex-col w-full overflow-y-hidden text-white tablet:ml-0 ml-[55px]">
         <h1 className="tablet:hidden p-4 text-[24px] font-bold w-full text-center">
           CASA BLANCA <br />
           BAR AND RESTAURANT
@@ -79,7 +79,7 @@ const DashboardScreen = () => {
           CASA BLANCA - BAR AND RESTAURANT
         </h1>
 
-        <div className="flex tablet:flex-row flex-col p-4 h-full ju">
+        <div className="flex tablet:flex-row flex-col p-4 h-full">
           <div className="flex flex-wrap flex-row laptop:w-[70%] w-[100%]  gap-4 p-2 tablet:p-0 laptop:justify-start tablet:h-[10px] h-full justify-center">
             <section
               className="h-[220px] laptop:w-[350px] w-[320px] bg-[#666666] border-[#666666] hover:border-white rounded-[20px]
@@ -93,7 +93,7 @@ const DashboardScreen = () => {
             </section>
             <section
               className="h-[220px] laptop:w-[350px] w-[320px] bg-[#666666] border-[#666666] hover:border-white rounded-[20px]
-            p-5 border-[3px] cursor-pointer"
+              p-5 border-[3px] cursor-pointer"
               onClick={openRoom2ModalHandler}
             >
               <div className="flex flex-row items-end gap-2">
@@ -103,7 +103,7 @@ const DashboardScreen = () => {
             </section>
             <section
               className="h-[220px] laptop:w-[350px] w-[320px] bg-[#666666] border-[#666666] hover:border-white rounded-[20px]
-            p-5 border-[3px] cursor-pointer"
+              p-5 border-[3px] cursor-pointer"
               onClick={openRoom3ModalHandler}
             >
               <div className="flex flex-row items-end gap-2">
@@ -113,7 +113,7 @@ const DashboardScreen = () => {
             </section>
             <section
               className="h-[220px] laptop:w-[350px] w-[320px] bg-[#666666] border-[#666666] hover:border-white rounded-[20px]
-            p-5 border-[3px] cursor-pointer"
+              p-5 border-[3px] cursor-pointer"
               onClick={openRoom4ModalHandler}
             >
               <div className="flex flex-row items-end gap-2">
