@@ -5,6 +5,7 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import { AiFillEdit } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
 import { EmployeeList } from "../../mockData";
+import { IoCloseSharp } from "react-icons/io5";
 import AddEmployeeModal from "../../components/dashboard-components/AddEmployeeModal";
 import UpdateEmployeeModal from "../../components/dashboard-components/UpdateEmployeeModal";
 
@@ -58,6 +59,10 @@ const PayrollScreen = () => {
     setUpdateEmployeeModal(false);
   };
 
+  const RemoveRecordHandler = () => {
+    //your remove employee record logic here
+    document.getElementById("remove_record").showModal();
+  };
   return (
     <>
       {addEmployeeModal && (
@@ -74,6 +79,47 @@ const PayrollScreen = () => {
           selectedEmployee={selectedEmployee}
         />
       )}
+
+      <dialog id="remove_record" className="modal">
+        <form
+          method="dialog"
+          className="modal-box w-[90%] tablet:w-full rounded-[15px]"
+        >
+          <section className="z-10 flex flex-row w-full  justify-between">
+            <h1 className="text-center w-full text-primary font-bold text-[24px] ml-[2rem]">
+              REMOVE RECORD
+            </h1>
+            {/* if there is a button tag in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost  mt-[-0.7rem] mr-[-0.4rem]">
+              <IoCloseSharp size={24} />
+            </button>
+          </section>
+          <p className="px-4 pt-4">
+            You are about to remove the employee record. Press{" "}
+            <strong>'REMOVE'</strong> if you wish to proceed, or{" "}
+            <strong>'CANCEL'</strong> if you do not.
+          </p>
+          <div className="modal-action w-full mx-auto flex tablet:flex-row flex-col items-center gap-2 tablet:gap-0">
+            {/* change the button into span tag if you are dealing with api request */}
+            <button
+              className="btn border-red-500 border-[1.5px] text-red-500 bg-white hover:bg-red-500 hover:text-white  tablet:h-[45px] tablet:w-[50%] w-full
+              mx-auto rounded-[80px] text-[18px] font-medium"
+            >
+              CANCEL
+            </button>
+            {/* change the button into span tag if you are dealing with api request */}
+            <span
+              className="btn bg-green-600 hover:bg-green-700 text-white tablet:h-[45px] tablet:w-[50%] w-full
+              mx-auto rounded-[80px] text-[18px] font-medium"
+              onClick={() => {
+                document.getElementById("remove_record").close();
+              }}
+            >
+              REMOVE
+            </span>
+          </div>
+        </form>
+      </dialog>
 
       <div className="flex flex-col w-full overflow-y-hidden text-white tablet:ml-0 ml-[55px]">
         <h1 className="tablet:hidden p-4 text-[24px] font-bold w-full text-center">
@@ -156,7 +202,7 @@ const PayrollScreen = () => {
                       />
                       <RiDeleteBin2Fill
                         className="text-[28px] cursor-pointer hover:text-red-600"
-                        onClick={undefined}
+                        onClick={RemoveRecordHandler}
                       />
                     </div>
                   </div>
