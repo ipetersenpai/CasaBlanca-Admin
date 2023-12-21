@@ -11,7 +11,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { LuUnlock } from "react-icons/lu";
 import { useForm } from "react-hook-form";
 import axios from "./../../utils/Path";
-import Cookies from "js-cookie";
+import { useCookies } from "react-cookie";
 
 const SigninScreen = () => {
   const {
@@ -20,19 +20,24 @@ const SigninScreen = () => {
     formState: { errors },
   } = useForm();
 
+  const [cookies, setCookie] = useCookies(["xyz"]);
+  const [statusCode, setStatusCode] = useState(null);
+
   //---onSubmit handler----
   const onSubmitHandler = async (data) => {
     try {
       const response = await axios.post("auth/login", data);
 
-      Cookies.set("xyz", response.data.token, {
-        expires: 0.125,
+      setCookie("xyz", response.data.token, {
+        expires: new Date(new Date().getTime() + 3 * 60 * 60 * 1000), // 3 hours
         domain: "localhost",
         httpOnly: false,
-        SameSite: "None",
+        sameSite: "None",
       });
     } catch (error) {
       if (error.response) {
+        setStatusCode(error.response.status);
+
         if (statusCode === 400) {
           alert("Invalid credentials. Please try again");
         } else if (statusCode === 401) {

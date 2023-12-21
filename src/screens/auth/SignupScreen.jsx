@@ -54,7 +54,7 @@ const SignupScreen = () => {
       <div
         className="w-full fixed top-0 hidden tablet:flex cursor-pointer"
         onClick={() => {
-          navigate("/");
+          navigate("/signin");
         }}
       >
         <h1

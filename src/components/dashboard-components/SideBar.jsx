@@ -6,16 +6,19 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
+import { useCookies } from "react-cookie";
 
 const SideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [openSidebar, setOpenSidebar] = useState(true);
   const [showName, setShowName] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["xyz"]);
 
   const logoutHandler = () => {
-    //your logout logic here
-    document.getElementById("logout_modal").showModal();
+    removeCookie("xyz");
+    navigate("/");
+    window.location.reload();
   };
 
   useEffect(() => {

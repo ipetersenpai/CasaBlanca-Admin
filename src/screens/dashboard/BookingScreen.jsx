@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
@@ -6,6 +6,8 @@ import { IoCloseSharp } from "react-icons/io5";
 import { MdCheckCircleOutline } from "react-icons/md";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
+import { useNavigate } from "react-router-dom";
+import axios from "./../../utils/Path";
 
 const BookingScreen = () => {
   const {
@@ -14,13 +16,40 @@ const BookingScreen = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+  const [statusCode, setStatusCode] = useState(null);
 
   //---onSubmit handler----
-  const onSubmitHandler = (data) => {
-    console.log(data);
+  const onSubmitHandler = async (data) => {
+    const pushData = {
+      fullname: data.fullname,
+      email: data.email,
+      contactNo: data.contactNo,
+      reservationDate: data.reservationDate + "T12:00:00",
+      roomType: data.roomType,
+      table: data.table,
+      numberOfPersons: data.numberOfPersons,
+      purpose: data.purpose,
+    };
 
-    //temporary only add your actual logic on sending the booking form
-    document.getElementById("approved_request").showModal();
+    try {
+      const response = await axios.post("booking/submit", pushData);
+      document.getElementById("approved_request").showModal();
+    } catch (error) {
+      if (error.response) {
+        setStatusCode(error.response.status);
+
+        if (statusCode === 400) {
+          alert("Invalid data. Please try again");
+        } else if (statusCode === 401) {
+          alert("Invalid data. Please try again");
+        } else {
+          alert("Invalid data. Please try again");
+        }
+      } else {
+        alert("Invalid data. Please try again");
+      }
+    }
   };
 
   return (
@@ -47,6 +76,9 @@ const BookingScreen = () => {
             <button
               className="btn bg-green-600 hover:bg-green-700 text-white tablet:h-[45px] w-[80%]
               mx-auto rounded-[80px] text-[18px] font-medium"
+              onClick={() => {
+                navigate("/");
+              }}
             >
               DONE
             </button>
@@ -55,18 +87,13 @@ const BookingScreen = () => {
       </dialog>
       <div className="flex flex-col h-[100vh] w-full justify-center items-center bg-primary">
         <div className="w-full fixed top-0 cursor-pointer flex justify-between">
-          <h1 className="p-2 tablet:text-[28px] text-[24px] text-white font-bold ">
-            CASA BLANCA
-          </h1>
-
           <h1
-            className="p-2 text-[18px] text-white cursor-pointer hover:underline hover:text-blue-500"
+            className="p-2 tablet:text-[28px] text-[24px] text-white font-bold z-10"
             onClick={() => {
-              localStorage.removeItem("TemAuthToken");
-              window.location.href = "/";
+              navigate("/");
             }}
           >
-            Logout
+            CASA BLANCA
           </h1>
         </div>
 
@@ -80,17 +107,17 @@ const BookingScreen = () => {
             <div className="w-[90%] mx-auto overflow-auto">
               <TextField
                 sx={{
-                  marginBottom: errors.full_name ? 1 : 2,
+                  marginBottom: errors.fullname ? 1 : 2,
                   width: "100%",
                   input: {
                     padding: "0.7rem",
                     background: "white",
                   },
                 }}
-                name="full_name"
+                name="fullname"
                 placeholder="Enter the full name"
-                error={errors.full_name ? true : false}
-                {...register("full_name", {
+                error={errors.fullname ? true : false}
+                {...register("fullname", {
                   required: "This is required",
 
                   pattern: {
@@ -99,9 +126,9 @@ const BookingScreen = () => {
                   },
                 })}
               />
-              {errors.full_name && (
+              {errors.fullname && (
                 <p className="text-white-500 text-[14px] ml-3 text-red-500">
-                  {errors.full_name.message}
+                  {errors.fullname.message}
                 </p>
               )}
 
@@ -132,17 +159,17 @@ const BookingScreen = () => {
               )}
               <TextField
                 sx={{
-                  marginBottom: errors.contact_no ? 1 : 2,
+                  marginBottom: errors.contactNo ? 1 : 2,
                   width: "100%",
                   input: {
                     padding: "0.7rem",
                     background: "white",
                   },
                 }}
-                name="contact_no"
+                name="contactNo"
                 placeholder="Enter the contact no."
-                error={errors.contact_no ? true : false}
-                {...register("contact_no", {
+                error={errors.contactNo ? true : false}
+                {...register("contactNo", {
                   required: "This is required",
                   pattern: {
                     value: /^(09|\+639)\d{9}$/,
@@ -150,47 +177,46 @@ const BookingScreen = () => {
                   },
                 })}
               />
-              {errors.contact_no && (
+              {errors.contactNo && (
                 <p className="text-white-500 text-[14px] ml-3 text-red-500">
-                  {errors.contact_no.message}
+                  {errors.contactNo.message}
                 </p>
               )}
               <p className="text-[15px] font-bold">Reservation Date</p>
               <TextField
                 sx={{
-                  marginBottom: errors.reservation_date ? 1 : 2,
+                  marginBottom: errors.reservationDate ? 1 : 2,
                   width: "100%",
                   input: {
                     padding: "0.7rem",
                     background: "white",
                   },
                 }}
-                name="reservation_date"
+                name="reservationDate"
                 type="date"
                 placeholder="Enter the Reservation Date"
-                error={errors.reservation_date ? true : false}
-                {...register("reservation_date", {
+                error={errors.reservationDate ? true : false}
+                {...register("reservationDate", {
                   required: "This is required",
                 })}
               />
-              {errors.reservation_date && (
+              {errors.reservationDate && (
                 <p className="text-white-500 text-[14px] ml-3 text-red-500">
-                  {errors.reservation_date.message}
+                  {errors.reservationDate.message}
                 </p>
               )}
               <p className="text-[15px] font-bold"> Select Room</p>
               <FormControl
-                error={errors.room_type ? true : false}
+                error={errors.roomType ? true : false}
                 sx={{
-                  marginBottom: errors.room_type ? 1 : 2,
+                  marginBottom: errors.roomType ? 1 : 2,
                   width: "100%",
                 }}
               >
                 <Select
-                  name="room_type"
+                  name="roomType"
                   type="text"
-                  defaultValue={watch("room_type")}
-                  {...register("room_type", {
+                  {...register("roomType", {
                     required: "This is required.",
                   })}
                   sx={{
@@ -203,34 +229,33 @@ const BookingScreen = () => {
                   <MenuItem value="">
                     <p className="text-slate-500 text-[12px]">Select one</p>
                   </MenuItem>
-                  <MenuItem value="Room 1">Room 1</MenuItem>
-                  <MenuItem value="Room 2">Room 2</MenuItem>
-                  <MenuItem value="Room 3">Room 3</MenuItem>
-                  <MenuItem value="Room 4">Room 4</MenuItem>
+                  <MenuItem value={1}>Room 1</MenuItem>
+                  <MenuItem value={2}>Room 2</MenuItem>
+                  <MenuItem value={3}>Room 3</MenuItem>
+                  <MenuItem value={4}>Room 4</MenuItem>
                 </Select>
-                {errors.room_type && (
+                {errors.roomType && (
                   <p
                     className={`text-red-500 text-[14px] ${
-                      errors.room_type ? "mt-2" : "mt-0"
+                      errors.roomType ? "mt-2" : "mt-0"
                     }`}
                   >
-                    {errors.room_type ? errors.room_type.message : ""}
+                    {errors.roomType ? errors.roomType.message : ""}
                   </p>
                 )}
               </FormControl>
               <p className="text-[15px] font-bold"> Select Table</p>
               <FormControl
-                error={errors.table_type ? true : false}
+                error={errors.table ? true : false}
                 sx={{
-                  marginBottom: errors.table_type ? 1 : 2,
+                  marginBottom: errors.table ? 1 : 2,
                   width: "100%",
                 }}
               >
                 <Select
-                  name="table_type"
+                  name="table"
                   type="text"
-                  defaultValue={watch("table_type")}
-                  {...register("table_type", {
+                  {...register("table", {
                     required: "This is required.",
                   })}
                   sx={{
@@ -250,13 +275,13 @@ const BookingScreen = () => {
                   <MenuItem value="Table 5">Table 5</MenuItem>
                   <MenuItem value="Table 6">Table 6</MenuItem>
                 </Select>
-                {errors.table_type && (
+                {errors.table && (
                   <p
                     className={`text-red-500 text-[14px] ${
-                      errors.table_type ? "mt-2" : "mt-0"
+                      errors.table ? "mt-2" : "mt-0"
                     }`}
                   >
-                    {errors.table_type ? errors.table_type.message : ""}
+                    {errors.table ? errors.table.message : ""}
                   </p>
                 )}
               </FormControl>
@@ -269,10 +294,9 @@ const BookingScreen = () => {
                 }}
               >
                 <Select
-                  name="total_person"
+                  name="numberOfPersons"
                   type="text"
-                  defaultValue={watch("total_person")}
-                  {...register("total_person", {
+                  {...register("numberOfPersons", {
                     required: "This is required.",
                   })}
                   sx={{
@@ -285,18 +309,20 @@ const BookingScreen = () => {
                   <MenuItem value="">
                     <p className="text-slate-500 text-[12px]">Select one</p>
                   </MenuItem>
-                  <MenuItem value="1">1</MenuItem>
-                  <MenuItem value="2">2</MenuItem>
-                  <MenuItem value="3">3</MenuItem>
-                  <MenuItem value="4">4</MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
                 </Select>
-                {errors.total_person && (
+                {errors.numberOfPersons && (
                   <p
                     className={`text-red-500 text-[14px] ${
-                      errors.total_person ? "mt-2" : "mt-0"
+                      errors.numberOfPersons ? "mt-2" : "mt-0"
                     }`}
                   >
-                    {errors.total_person ? errors.total_person.message : ""}
+                    {errors.numberOfPersons
+                      ? errors.numberOfPersons.message
+                      : ""}
                   </p>
                 )}
               </FormControl>
