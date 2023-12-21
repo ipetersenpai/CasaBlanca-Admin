@@ -4,6 +4,7 @@ import DashboardScreen from "../../screens/dashboard/DashboardScreen";
 import SideBar from "../dashboard-components/SideBar";
 import PayrollScreen from "../../screens/dashboard/PayrollScreen";
 import PointOfSaleScreen from "../../screens/dashboard/PointOfSaleScreen";
+import BookingScreen from "../../screens/dashboard/BookingScreen";
 
 const DashboardRoute = () => {
   return (
@@ -36,6 +37,7 @@ const DashboardRoute = () => {
             </>
           }
         />
+        <Route path="/booking" element={<BookingScreen />} />
         <Route
           path="*"
           element={
