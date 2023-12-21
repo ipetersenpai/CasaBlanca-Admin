@@ -55,7 +55,9 @@ const BookingScreen = () => {
       </dialog>
       <div className="flex flex-col h-[100vh] w-full justify-center items-center bg-primary">
         <div className="w-full fixed top-0 cursor-pointer flex justify-between">
-          <div className="p-2"></div>
+          <h1 className="p-2 tablet:text-[28px] text-[24px] text-white font-bold ">
+            CASA BLANCA
+          </h1>
 
           <h1
             className="p-2 text-[18px] text-white cursor-pointer hover:underline hover:text-blue-500"
@@ -69,9 +71,9 @@ const BookingScreen = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <div className="flex flex-col tablet:w-[420px] h-[600px] desktop:w-[450px] w-[98%] mx-auto bg-white text-black p-4 rounded-[15px] shadow-lg">
+          <div className="flex flex-col tablet:w-[420px] h-[600px] desktop:w-[450px] w-[95%] mx-auto bg-white text-black p-4 rounded-[15px] shadow-lg">
             <section className="flex flex-row w-full">
-              <h1 className="font-bold text-[26px] mx-auto mb-7 mt-3 text-primary">
+              <h1 className="font-bold text-[26px] mx-auto mb-7 mt-3 text-primary text-center">
                 BOOKING FORM
               </h1>
             </section>
@@ -322,7 +324,7 @@ const BookingScreen = () => {
             </div>
             <button
               type="submit"
-              className="btn mt-4 w-[95%] mx-auto bg-green-600 hover:bg-green-700 text-[20px] text-white rounded-[20px] mb-5 z-10"
+              className="btn mt-4 w-[80%] mx-auto bg-green-600 hover:bg-green-700 text-[20px] text-white rounded-[20px] mb-5 z-10"
             >
               BOOK NOW
             </button>
