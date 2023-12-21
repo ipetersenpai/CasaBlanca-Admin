@@ -6,6 +6,7 @@ export const getUserDatafromToken = () => {
 
   try {
     const decodedToken = jwtDecode(cookies.xyz);
+    console.log(decodedToken);
     return {
       decodedToken,
     };
