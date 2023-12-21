@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { RiErrorWarningFill } from "react-icons/ri";
+import { FiUser } from "react-icons/fi";
+import { FaRegIdBadge } from "react-icons/fa6";
+import { MdOutlinePhoneEnabled } from "react-icons/md";
 import facebookIcon from "./../../assets/icons/fb_icon.png";
 import gooogleIcon from "./../../assets/icons/google_icon.png";
 import TextField from "@mui/material/TextField";
@@ -11,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineEmail } from "react-icons/md";
 import { LuUnlock } from "react-icons/lu";
 import { useForm } from "react-hook-form";
+import axios from "./../../utils/Path";
 
 const SignupScreen = () => {
   const {
@@ -20,8 +24,24 @@ const SignupScreen = () => {
   } = useForm();
 
   //---onSubmit handler----
-  const onSubmitHandler = (data) => {
-    console.log(data);
+  const onSubmitHandler = async (data) => {
+    try {
+      const response = await axios.post("auth/signup", data);
+
+      alert("You have successfully created an account");
+
+      navigate("/login");
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          alert(`Signup failed: ${error.response.data.msg}`);
+        } else if (error.response.status === 500) {
+          alert("The employee ID already exists.");
+        }
+      } else {
+        alert("Signup failed. Please try again.");
+      }
+    }
   };
 
   const navigate = useNavigate();
@@ -45,114 +65,216 @@ const SignupScreen = () => {
         </h1>
       </div>
       <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <div className="flex flex-col tablet:w-[420px] desktop:w-[450px] w-[98%] mx-auto bg-secondary text-white p-4 rounded-[15px] shadow-lg">
+        <div className="flex flex-col tablet:w-[420px] h-[650px] desktop:w-[450px] w-[98%] mx-auto bg-secondary text-white p-4 rounded-[15px] shadow-lg">
           <section className="flex flex-row w-full">
             <h1 className="font-bold text-[26px] mx-auto mb-10 mt-3">
               REGISTER
             </h1>
           </section>
 
-          <span className="font-bold ml-3">Email</span>
-          <div className="bg-red-200 mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
-            <MdOutlineEmail className="text-gray-400 text-[28px] absolute ml-2 z-10" />
-            <TextField
-              sx={{
-                width: "100%",
-                input: {
-                  padding: "0.7rem",
-                  background: "white",
-                  borderRadius: "10px",
-                  paddingLeft: 5.5,
-                },
-              }}
-              InputProps={{
-                style: {
-                  borderRadius: "10px",
-                },
-              }}
-              name="email"
-              placeholder="Enter your email"
-              error={errors.email ? true : false}
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: "Invalid email address",
-                },
-              })}
-            />
-          </div>
-          {errors.email && (
-            <p className="text-red-500 text-[14px] mt-2 ml-3 mb-[-0.5rem]">
-              {errors.email.message}
-            </p>
-          )}
+          <div className="w-full overflow-y-auto flex flex-col">
+            <span className="font-bold ml-3">Full Name</span>
+            <div className="relative bg-white mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
+              <FiUser className="text-gray-400 text-[28px] absolute ml-2 z-10" />
+              <TextField
+                sx={{
+                  width: "100%",
+                  input: {
+                    padding: "0.7rem",
+                    background: "white",
+                    borderRadius: "10px",
+                    paddingLeft: 5.5,
+                  },
+                }}
+                InputProps={{
+                  style: {
+                    borderRadius: "10px",
+                  },
+                }}
+                name="fullname"
+                placeholder="Enter your Full name"
+                error={errors.fullname ? true : false}
+                {...register("fullname", {
+                  required: "this is required",
+                  pattern: {
+                    value: /^[a-z ,.'-]+$/i,
+                    message: "Invalid characters in name.",
+                  },
+                })}
+              />
+            </div>
+            {errors.fullname && (
+              <p className="text-red-500 text-[14px] mt-2 ml-3 mb-[-0.5rem]">
+                {errors.fullname.message}
+              </p>
+            )}
+            <span className="font-bold ml-3 mt-2">Contact No.</span>
+            <div className="relative bg-white mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
+              <MdOutlinePhoneEnabled className="text-gray-400 text-[28px] absolute ml-2 z-10" />
+              <TextField
+                sx={{
+                  width: "100%",
+                  input: {
+                    padding: "0.7rem",
+                    background: "white",
+                    borderRadius: "10px",
+                    paddingLeft: 5.5,
+                  },
+                }}
+                InputProps={{
+                  style: {
+                    borderRadius: "10px",
+                  },
+                }}
+                name="contactNo"
+                placeholder="Enter your contact no."
+                error={errors.contactNo ? true : false}
+                {...register("contactNo", {
+                  required: "this is required",
+                  pattern: {
+                    value: /^(09|\+639)\d{9}$/,
+                    message: "Invalid phone number.",
+                  },
+                })}
+              />
+            </div>
+            {errors.contactNo && (
+              <p className="text-red-500 text-[14px] mt-2 ml-3 mb-[-0.5rem]">
+                {errors.contactNo.message}
+              </p>
+            )}
 
-          <span className="font-bold ml-3 mt-3">Password</span>
-          <div className="bg-white mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
-            <LuUnlock className="text-gray-400 text-[28px] absolute ml-2 z-10" />
-            <TextField
-              sx={{
-                width: "100%",
-                input: {
-                  padding: "0.7rem",
-                  background: "white",
-                  borderRadius: "10px",
-                  paddingLeft: 5.5,
-                },
-              }}
-              InputProps={{
-                style: {
-                  borderRadius: "10px",
-                },
-                endAdornment: (
-                  <InputAdornment
-                    position="end"
-                    sx={{
-                      background: "white",
-                    }}
-                  >
-                    <IconButton onClick={handleClickShowPassword}>
-                      {showPassword ? (
-                        <VisibilityOffOutlinedIcon />
-                      ) : (
-                        <VisibilityOutlinedIcon />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-              error={errors.password ? true : false}
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters long.",
-                },
-              })}
-            />
-          </div>
-          {errors.password && (
-            <p className="text-red-500 text-[14px] mt-2 ml-3 mb-[-0.5rem]">
-              {errors.password.message}
-            </p>
-          )}
+            <span className="font-bold ml-3 mt-2">Employee ID</span>
+            <div className="relative bg-white mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
+              <FaRegIdBadge className="text-gray-400 text-[28px] absolute ml-2 z-10" />
+              <TextField
+                sx={{
+                  width: "100%",
+                  input: {
+                    padding: "0.7rem",
+                    background: "white",
+                    borderRadius: "10px",
+                    paddingLeft: 5.5,
+                  },
+                }}
+                InputProps={{
+                  style: {
+                    borderRadius: "10px",
+                  },
+                }}
+                name="employeeId"
+                placeholder="Enter your employee ID"
+                error={errors.employeeId ? true : false}
+                {...register("employeeId", {
+                  required: "this is required",
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Invalid. Please enter numbers only.",
+                  },
+                })}
+              />
+            </div>
+            {errors.employeeId && (
+              <p className="text-red-500 text-[14px] mt-2 ml-3 mb-[-0.5rem]">
+                {errors.employeeId.message}
+              </p>
+            )}
 
+            <span className="font-bold ml-3 mt-2">Email</span>
+            <div className="relative bg-white mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
+              <MdOutlineEmail className="text-gray-400 text-[28px] absolute ml-2 z-10" />
+              <TextField
+                sx={{
+                  width: "100%",
+                  input: {
+                    padding: "0.7rem",
+                    background: "white",
+                    borderRadius: "10px",
+                    paddingLeft: 5.5,
+                  },
+                }}
+                InputProps={{
+                  style: {
+                    borderRadius: "10px",
+                  },
+                }}
+                name="email"
+                placeholder="Enter your email"
+                error={errors.email ? true : false}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+              />
+            </div>
+            {errors.email && (
+              <p className="text-red-500 text-[14px] mt-2 ml-3 mb-[-0.5rem]">
+                {errors.email.message}
+              </p>
+            )}
+
+            <span className="font-bold ml-3 mt-3">Password</span>
+            <div className="relative bg-white mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
+              <LuUnlock className="text-gray-400 text-[28px] absolute ml-2 z-10" />
+              <TextField
+                sx={{
+                  width: "100%",
+                  input: {
+                    padding: "0.7rem",
+                    background: "white",
+                    borderRadius: "10px",
+                    paddingLeft: 5.5,
+                  },
+                }}
+                InputProps={{
+                  style: {
+                    borderRadius: "10px",
+                  },
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      sx={{
+                        background: "white",
+                      }}
+                    >
+                      <IconButton onClick={handleClickShowPassword}>
+                        {showPassword ? (
+                          <VisibilityOffOutlinedIcon />
+                        ) : (
+                          <VisibilityOutlinedIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                error={errors.password ? true : false}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters long.",
+                  },
+                })}
+              />
+            </div>
+            {errors.password && (
+              <p className="text-red-500 text-[14px] mt-2 ml-3 mb-[-0.5rem]">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
           <button
             type="submit"
             className="btn mt-7 w-[95%] mx-auto btn-primary text-[20px] text-white rounded-[10px]"
           >
             SIGN UP
           </button>
-
-          {/* -----Error Message Validation------ */}
-          {/* <div className=" bg-red-200 text-red-500 h-[45px] flex items-center justify-center w-[95%] mx-auto mt-5 border-[1px] border-red-500 gap-2">
-            <RiErrorWarningFill className="text-[22px]" />
-            <p>Email is Already Exist</p>
-          </div> */}
 
           <p className="mx-auto mt-5 text-center text-[16px]">Sign up with</p>
 
