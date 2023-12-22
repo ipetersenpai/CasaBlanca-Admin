@@ -3,10 +3,11 @@ import { IoCloseSharp } from "react-icons/io5";
 import { MdCheckCircleOutline } from "react-icons/md";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
-
+import axios from "./../../utils/Path";
 const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
   const [modalHandler, setModalHandler] = useState(false);
   const [imageAttach, setImageAttach] = useState(null);
+  const [statusCode, setStatusCode] = useState(null);
 
   const {
     register,
@@ -15,9 +16,29 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
   } = useForm();
 
   //---onSubmit handler----
-  const onSubmitHandler = (data) => {
-    console.log(data); // add your logic here to handle the update employee record and don't forget to include imageAttach for the user profile
-    document.getElementById("created_succcess").showModal();
+  const onSubmitHandler = async (data) => {
+    console.log(data);
+
+    try {
+      const response = await axios.put(
+        `auth/update/${selectedEmployee._id}`,
+        data
+      );
+      document.getElementById("update_succcess").showModal();
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.message);
+        if (statusCode === 400) {
+          alert("Error update. Please try again");
+        } else if (statusCode === 401) {
+          alert("Error update. Please try again");
+        } else {
+          alert("Error update. Please try again later.");
+        }
+      } else {
+        alert("Error update. Please try again later.");
+      }
+    }
   };
 
   useEffect(() => {
@@ -27,7 +48,7 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
   return (
     <>
       {/*-----Approved modal request----- */}
-      <dialog id="created_succcess" className="modal">
+      <dialog id="update_succcess" className="modal">
         <form
           method="dialog"
           className="modal-box w-[90%] tablet:w-full rounded-[15px]"
@@ -63,7 +84,7 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
             <div className="absolute inset-0" />
 
             <div
-              className="tablet:w-[450px] w-[90%] tablet:h-[600px] h-[80%] bg-white text-black
+              className="tablet:w-[450px] w-[90%] tablet:h-[550px] h-[80%] bg-white text-black
               flex flex-col mx-auto rounded-[15px]
               shadow-md modal-container p-7"
             >
@@ -98,7 +119,7 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
 
                   <TextField
                     sx={{
-                      marginBottom: errors.full_name ? 1 : 2,
+                      marginBottom: errors.fullname ? 1 : 2,
                       width: "100%",
                       input: {
                         padding: "0.7rem",
@@ -111,11 +132,11 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
                         borderRadius: "20px",
                       },
                     }}
-                    name="full_name"
+                    name="fullname"
                     placeholder="Enter the full name"
-                    defaultValue={selectedEmployee.full_name}
-                    error={errors.full_name ? true : false}
-                    {...register("full_name", {
+                    defaultValue={selectedEmployee.fullname}
+                    error={errors.fullname ? true : false}
+                    {...register("fullname", {
                       required: "This is required",
 
                       pattern: {
@@ -124,9 +145,9 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
                       },
                     })}
                   />
-                  {errors.full_name && (
+                  {errors.fullname && (
                     <p className="text-white-500 text-[14px] ml-3 text-red-500">
-                      {errors.full_name.message}
+                      {errors.fullname.message}
                     </p>
                   )}
 
@@ -164,7 +185,7 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
                   )}
                   <TextField
                     sx={{
-                      marginBottom: errors.contact_no ? 1 : 2,
+                      marginBottom: errors.contactNo ? 1 : 2,
                       width: "100%",
                       input: {
                         padding: "0.7rem",
@@ -177,11 +198,11 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
                         borderRadius: "20px",
                       },
                     }}
-                    name="contact_no"
-                    defaultValue={selectedEmployee.contact_no}
+                    name="contactNo"
+                    defaultValue={selectedEmployee.contactNo}
                     placeholder="Enter the contact no."
-                    error={errors.contact_no ? true : false}
-                    {...register("contact_no", {
+                    error={errors.contactNo ? true : false}
+                    {...register("contactNo", {
                       required: "This is required",
                       pattern: {
                         value: /^(09|\+639)\d{9}$/,
@@ -189,38 +210,9 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
                       },
                     })}
                   />
-                  {errors.contact_no && (
+                  {errors.contactNo && (
                     <p className="text-white-500 text-[14px] ml-3 text-red-500">
-                      {errors.contact_no.message}
-                    </p>
-                  )}
-
-                  <TextField
-                    sx={{
-                      marginBottom: errors.username ? 1 : 2,
-                      width: "100%",
-                      input: {
-                        padding: "0.7rem",
-                        background: "white",
-                        borderRadius: "20px",
-                      },
-                    }}
-                    InputProps={{
-                      style: {
-                        borderRadius: "20px",
-                      },
-                    }}
-                    name="username"
-                    defaultValue={selectedEmployee.username}
-                    placeholder="Enter the username"
-                    error={errors.username ? true : false}
-                    {...register("username", {
-                      required: "This is required",
-                    })}
-                  />
-                  {errors.username && (
-                    <p className="text-white-500 text-[14px] ml-3 text-red-500">
-                      {errors.username.message}
+                      {errors.contactNo.message}
                     </p>
                   )}
 
@@ -240,8 +232,9 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
                       },
                     }}
                     name="password"
+                    disabled={true}
                     defaultValue={selectedEmployee.password}
-                    placeholder="Enter the password"
+                    placeholder="Enter the new password"
                     error={errors.password ? true : false}
                     {...register("password", {
                       required: "This is required",
@@ -259,7 +252,7 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
 
                   <TextField
                     sx={{
-                      marginBottom: errors.employee_id ? 1 : 2,
+                      marginBottom: errors.employeeId ? 1 : 2,
                       width: "100%",
                       input: {
                         padding: "0.7rem",
@@ -272,17 +265,17 @@ const UpdateEmployeeModal = ({ openModal, closeModal, selectedEmployee }) => {
                         borderRadius: "20px",
                       },
                     }}
-                    name="employee_id"
-                    defaultValue={selectedEmployee.employee_id}
+                    name="employeeId"
+                    defaultValue={selectedEmployee.employeeId}
                     placeholder="Enter the Employee ID"
-                    error={errors.employee_id ? true : false}
-                    {...register("employee_id", {
+                    error={errors.employeeId ? true : false}
+                    {...register("employeeId", {
                       required: "This is required",
                     })}
                   />
-                  {errors.employee_id && (
+                  {errors.employeeId && (
                     <p className="text-white-500 text-[14px] ml-3 text-red-500">
-                      {errors.employee_id.message}
+                      {errors.employeeId.message}
                     </p>
                   )}
                   <button

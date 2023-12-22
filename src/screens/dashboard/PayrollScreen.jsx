@@ -1,27 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import { FaUser } from "react-icons/fa6";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { AiFillEdit } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
-import { EmployeeList } from "../../mockData";
 import { IoCloseSharp } from "react-icons/io5";
 import AddEmployeeModal from "../../components/dashboard-components/AddEmployeeModal";
 import UpdateEmployeeModal from "../../components/dashboard-components/UpdateEmployeeModal";
+import axios from "./../../utils/Path";
 
 const PayrollScreen = () => {
   const [attachFile, setAttachFile] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredEmployees, setFilteredEmployees] = useState(EmployeeList);
+  const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [addEmployeeModal, setAddEmployeeModal] = useState(false);
   const [updateEmployeeModal, setUpdateEmployeeModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState("");
 
+  useEffect(() => {
+    const fetchPendingBookings = async () => {
+      try {
+        const response = await axios.get(`auth/employees`);
+        console.log(response.data); // Log the fetched data
+        setFilteredEmployees(response.data);
+      } catch (error) {
+        console.log(error.message);
+        console.error("Error fetching pending bookings:", error);
+      }
+    };
+
+    fetchPendingBookings();
+  }, []);
+
   // Function to filter employees based on search query
   const filterEmployees = () => {
-    const filtered = EmployeeList.filter((employee) =>
-      employee.full_name.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = filteredEmployees.filter((employee) =>
+      employee.fullname.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    console.log(filtered); // Log the filtered data
     setFilteredEmployees(filtered);
   };
 
@@ -31,7 +47,7 @@ const PayrollScreen = () => {
     setSearchQuery(query);
 
     if (query.trim() === "") {
-      setFilteredEmployees(EmployeeList);
+      setFilteredEmployees(filteredEmployees);
     } else {
       filterEmployees();
     }
@@ -190,7 +206,7 @@ const PayrollScreen = () => {
                       <div className="h-[42px] min-w-[42px] rounded-[50%] bg-secondary flex items-center justify-center">
                         <FaUser className="text-[22px] text-white" />
                       </div>
-                      <p className="text-[16px]">{employee.full_name}</p>
+                      <p className="text-[16px]">{employee.fullname}</p>
                     </div>
 
                     <div className="h-full flex flex-row gap-2 items-center">
