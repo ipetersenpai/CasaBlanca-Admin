@@ -33,6 +33,8 @@ const SigninScreen = () => {
         domain: "localhost",
         httpOnly: false,
         sameSite: "None",
+        // secure: window.location.protocol === "https:", // Set secure only for HTTPS
+        secure: true,
       });
     } catch (error) {
       if (error.response) {
