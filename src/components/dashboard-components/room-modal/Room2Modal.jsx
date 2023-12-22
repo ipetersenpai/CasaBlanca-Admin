@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { VscError } from "react-icons/vsc";
-import { CustomerRequestList } from "../../../mockData"; //temporary replace this with actual data from the database
+import axios from "./../../../utils/Path";
 
 const formatDate = (dateString) => {
   const dateObject = new Date(dateString);
@@ -13,6 +13,20 @@ const formatDate = (dateString) => {
 const Room2Modal = ({ openModal, closeModal }) => {
   const [modalHandler, setModalHandler] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState("");
+  const [pendingBookings, setPendingBookings] = useState([]);
+
+  useEffect(() => {
+    const fetchPendingBookings = async () => {
+      try {
+        const response = await axios.get(`booking/pending/2`);
+        setPendingBookings(response.data);
+      } catch (error) {
+        console.error("Error fetching pending bookings:", error);
+      }
+    };
+
+    fetchPendingBookings();
+  }, []);
 
   const ViewRequestHandler = (request) => {
     setSelectedRequest(request);
@@ -45,7 +59,7 @@ const Room2Modal = ({ openModal, closeModal }) => {
                 Full Name:
               </p>
               <h2 className="tablet:text-[22px] text-[17px]">
-                {selectedRequest.full_name}
+                {selectedRequest.fullname}
               </h2>
             </div>
             <div className="flex flex-row items-center tablet:gap-4 gap-2 mb-2">
@@ -53,19 +67,19 @@ const Room2Modal = ({ openModal, closeModal }) => {
                 Contact No:
               </p>
               <h2 className="tablet:text-[22px] text-[17px]">
-                {selectedRequest.contact_no}
+                {selectedRequest.contactNo}
               </h2>
             </div>
             <div className="flex flex-row items-center tablet:gap-4 gap-2 mb-2">
               <p className="font-bold tablet:text-[20px] text-[16px]">Email:</p>
               <h2 className="tablet:text-[22px] text-[17px]">
-                {selectedRequest.gmail}
+                {selectedRequest.email}
               </h2>
             </div>
             <div className="flex flex-row items-center tablet:gap-4 gap-2 mb-2">
               <p className="font-bold tablet:text-[20px] text-[16px]">Date:</p>
               <h2 className="tablet:text-[22px] text-[17px]">
-                {formatDate(selectedRequest.date_requested)}
+                {formatDate(selectedRequest.reservationDate)}
               </h2>
             </div>
             <div className="flex flex-row items-center tablet:gap-4 gap-2 mb-2">
@@ -79,7 +93,7 @@ const Room2Modal = ({ openModal, closeModal }) => {
                 Person:
               </p>
               <h2 className="tablet:text-[22px] text-[17px]">
-                {selectedRequest.person}
+                {selectedRequest.numberOfPersons}
               </h2>
             </div>
             <div className="flex flex-row items-center tablet:gap-4 gap-2 mb-2">
@@ -96,9 +110,17 @@ const Room2Modal = ({ openModal, closeModal }) => {
             <button
               className="btn border-red-500 border-[1.5px] text-red-500 bg-white hover:bg-red-500 hover:text-white  tablet:h-[45px] tablet:w-[50%] w-full
               mx-auto rounded-[80px] text-[18px] font-medium"
-              onClick={() => {
-                document.getElementById("decline_request").showModal();
-                document.getElementById("view_request").close();
+              onClick={async () => {
+                try {
+                  await axios.put(
+                    `http://localhost:3522/api/booking/approve/${selectedRequest._id}`
+                  );
+
+                  document.getElementById("decline_request").showModal();
+                  document.getElementById("view_request").close();
+                } catch (error) {
+                  console.error("Error approving booking:", error);
+                }
               }}
             >
               DECLINE
@@ -107,9 +129,17 @@ const Room2Modal = ({ openModal, closeModal }) => {
             <span
               className="btn bg-green-600 hover:bg-green-700 text-white tablet:h-[45px] tablet:w-[50%] w-full
               mx-auto rounded-[80px] text-[18px] font-medium"
-              onClick={() => {
-                document.getElementById("approved_request").showModal();
-                document.getElementById("view_request").close();
+              onClick={async () => {
+                try {
+                  await axios.put(
+                    `http://localhost:3522/api/booking/approve/${selectedRequest._id}`
+                  );
+
+                  document.getElementById("approved_request").showModal();
+                  document.getElementById("view_request").close();
+                } catch (error) {
+                  console.error("Error approving booking:", error);
+                }
               }}
             >
               ACCEPT
@@ -255,12 +285,12 @@ const Room2Modal = ({ openModal, closeModal }) => {
                     <div className="overflow-y-auto w-full gap-3 p-2 flex items-center flex-col">
                       <p className="font-bold text-[17px]">CUSTOMER REQUEST</p>
                       {/* change this with actual data */}
-                      {CustomerRequestList.map((requestlist) => (
+                      {pendingBookings.map((requestlist) => (
                         <div
                           key={requestlist.id}
                           className="bg-accent hover:bg-[#c2c1b7] w-full h-[42px] flex flex-row item-center p-2 rounded-lg justify-between"
                         >
-                          <p>{requestlist.full_name.toUpperCase()}</p>
+                          <p>{requestlist.fullname.toUpperCase()}</p>
                           <button
                             className="border-b-[4px] border-accent mr-2 hover:border-green-400 z-10 text-[14px] font-bold"
                             onClick={() => ViewRequestHandler(requestlist)}

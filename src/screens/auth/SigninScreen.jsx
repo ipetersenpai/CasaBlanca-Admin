@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineEmail } from "react-icons/md";
 import { LuUnlock } from "react-icons/lu";
 import { useForm } from "react-hook-form";
+import axios from "./../../utils/Path";
+import { useCookies } from "react-cookie";
 
 const SigninScreen = () => {
   const {
@@ -18,13 +20,35 @@ const SigninScreen = () => {
     formState: { errors },
   } = useForm();
 
-  //---onSubmit handler----
-  const onSubmitHandler = (data) => {
-    console.log(data);
+  const [cookies, setCookie] = useCookies(["xyz"]);
+  const [statusCode, setStatusCode] = useState(null);
 
-    //This is temporary only to handle the changing from auth to dashboard. Change this with actual API request for auth
-    localStorage.setItem("TemAuthToken", true);
-    location.href = location.href;
+  //---onSubmit handler----
+  const onSubmitHandler = async (data) => {
+    try {
+      const response = await axios.post("auth/login", data);
+
+      setCookie("xyz", response.data.token, {
+        expires: new Date(new Date().getTime() + 3 * 60 * 60 * 1000), // 3 hours
+        domain: "localhost",
+        httpOnly: false,
+        sameSite: "None",
+      });
+    } catch (error) {
+      if (error.response) {
+        setStatusCode(error.response.status);
+
+        if (statusCode === 400) {
+          alert("Invalid credentials. Please try again");
+        } else if (statusCode === 401) {
+          alert("Unauthorized. Please check your credentials");
+        } else {
+          alert("Login failed. Please try again later.");
+        }
+      } else {
+        alert("Login failed. Please try again later.");
+      }
+    }
   };
 
   const navigate = useNavigate();
@@ -55,7 +79,7 @@ const SigninScreen = () => {
             </h1>
           </section>
 
-          <span className="font-bold ml-3">Email</span>
+          <span className="font-bold ml-3">Email or Username</span>
           <div className="mx-auto flex flex-row w-[95%] rounded-[15px] items-center">
             <MdOutlineEmail className="text-gray-400 text-[28px] absolute ml-2 z-10" />
             <TextField
@@ -73,21 +97,22 @@ const SigninScreen = () => {
                   borderRadius: "10px",
                 },
               }}
-              name="email"
-              placeholder="Enter your email"
-              error={errors.email ? true : false}
-              {...register("email", {
-                required: "Email is required",
+              name="identifier"
+              placeholder="Enter your email/username"
+              error={errors.identifier ? true : false}
+              {...register("identifier", {
+                required: "this is required",
                 pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: "Invalid email address",
+                  value:
+                    /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$|^[a-zA-Z0-9_]{3,20}$/,
+                  message: "Invalid username or email",
                 },
               })}
             />
           </div>
-          {errors.email && (
+          {errors.identifier && (
             <p className="text-red-500 text-[14px] mt-2 ml-3 mb-[-0.5rem]">
-              {errors.email.message}
+              {errors.identifier.message}
             </p>
           )}
 
@@ -158,17 +183,6 @@ const SigninScreen = () => {
           >
             SIGN IN
           </button>
-
-          {/* -----Error Message Validation------ */}
-          {/* <div className=" bg-red-200 text-red-500 h-[45px] flex items-center justify-center w-[95%] mx-auto mt-5 border-[1px] border-red-500 gap-2">
-            <RiErrorWarningFill className="text-[22px]" />
-            <p>Invalid Email and Password</p>
-          </div>
-
-          <div className=" bg-yellow-200 text-yellow-600 h-[45px] flex items-center justify-center w-[95%] mx-auto mt-5 border-[1px] border-yellow-500 gap-2">
-            <RiErrorWarningFill className="text-[22px]" />
-            <p>Account is not Verified</p>
-          </div> */}
 
           <p className="mx-auto mt-4  text-center text-[16px]">
             Don't have an account?{" "}

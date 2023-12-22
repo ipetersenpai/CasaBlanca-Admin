@@ -6,15 +6,18 @@ import { RiLogoutBoxRLine } from "react-icons/ri";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
+import { useCookies } from "react-cookie";
+import { getUserDatafromToken } from "../../utils/Auth";
 
 const SideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [openSidebar, setOpenSidebar] = useState(true);
   const [showName, setShowName] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["xyz"]);
+  const Username = getUserDatafromToken().decodedToken.user.fullname;
 
   const logoutHandler = () => {
-    //your logout logic here
     document.getElementById("logout_modal").showModal();
   };
 
@@ -64,8 +67,9 @@ const SideBar = () => {
               className="btn bg-green-600 hover:bg-green-700 text-white tablet:h-[45px] tablet:w-[50%] w-full
               mx-auto rounded-[80px] text-[18px] font-medium"
               onClick={() => {
-                localStorage.removeItem("TemAuthToken");
-                window.location.href = "/";
+                removeCookie("xyz");
+                navigate("/");
+                window.location.reload();
               }}
             >
               CONTINUE
@@ -113,7 +117,9 @@ const SideBar = () => {
               <FaUser className="text-[22px]" />
             </div>
             {showName && (
-              <p className={`text-bold text-[18px] text-black`}>John Doe</p>
+              <p className={`text-bold text-[15px] text-black`}>
+                {Username.toUpperCase()}
+              </p>
             )}
           </div>
 
